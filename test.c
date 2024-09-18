@@ -1,5 +1,8 @@
 /*
- * TODO: Add an appropriate descriptive comment here
+ * Homework 1B - Check if a string has unique chars
+ * This file includes the main function which tests the hasUniqueChars() method
+ *
+ * Author: Emily Thorpe
  */
 
 #include <stdio.h>    // printf
@@ -27,13 +30,6 @@ int main() {
                        // chose 128 because it is a multiple of 8 bytes
   strcpy(string3, "A string constant copied in.\n");
 
-  // You can uncomment these to see how the strings were initialized above.
-  // Then you can comment these out again once you see that the 
-  // strings were created correctly
-  // printf ("%s", string1);
-  // printf ("%s", string2);
-  // printf ("%s", string3);
-
   // -------------------------------------------------------------
   // Thorough and exhaustive tests of hasUniqueChars()  
   bool ok;    // holds the result of hasUniqueChars(); used in asserts
@@ -49,18 +45,49 @@ int main() {
   ok = hasUniqueChars(string3);
   assert(ok);
   
-  // TODO: add your tests here
+  // Test 3: String with all ascii characters
+  strcpy(string3, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~");
+  ok = hasUniqueChars(string3);
+  assert(ok);
 
+  // Test 4: String with duplicate characters
+  strcpy(string3, "This should fail (l and s and i and h)");
+  ok = hasUniqueChars(string3);
+  assert(!ok);
 
+  // Test 5: String with multiple spaces
+  strcpy(string3, "a b c d e f g");
+  ok = hasUniqueChars(string3);
+  assert(ok);
 
-  // NOTE: if you add a \n to any tests, this should cause the
-  //       exit failure given. Keep this test last so you can check 
-  //       that others pass or fail as you expect them to.
+  // Test 6: Edge case at the end of the first range (ASCII 63)
+  strcpy(string3, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789?");
+  ok = hasUniqueChars(string3);
+  assert(ok);
+
+  // Test 7: Edge case at the start of the second range (ASCII 64)
+  strcpy(string3, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@");
+  ok = hasUniqueChars(string3);
+  assert(ok);
+
+  // Test 8: Mix of printable, non-printable, and edge cases
+  strcpy(string3, "abc\1\2\3def\x7F");  // \x7F is DELETE (ASCII 127)
+  ok = hasUniqueChars(string3);
+  assert(ok);
+
+  // Test 9: Empty string (edge case)
+  strcpy(string3, "");
+  ok = hasUniqueChars(string3);
+  assert(ok);
+
+  // Test 10: Non-printing characters
+  strcpy(string3, "\1\2\3\0");
+  ok = hasUniqueChars(string3);
+  printf("%d ", ok);
+
+  // Test 11: More non-printing characters
   strcpy(string3, "a b cc\n");
   ok = hasUniqueChars(string3);
-  // other examples that should fail that you can place in strings
-  // are \0 or \t or \r
-  // See problem description for more details about escape sequences
-  
+
   return 0;
 }
